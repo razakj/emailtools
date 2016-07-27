@@ -1,0 +1,30 @@
+{
+  "name": "emailtools",
+  "version": "0.0.1",
+  "description": "Node JS set of tools to help working with Email protocols",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/razakj/emailtools.git"
+  },
+  "keywords": [
+    "imap",
+    "smtp",
+    "email",
+    "tools"
+  ],
+  "author": "Jakub Razak",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/razakj/emailtools/issues"
+  },
+  "homepage": "https://github.com/razakj/emailtools#readme",
+  "dependencies": {
+    "imap": "^0.8.17",
+    "mailparser": "^0.6.1",
+    "moment": "^2.14.1"
+  }
+}
