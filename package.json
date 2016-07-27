@@ -1,7 +1,7 @@
 {
   "name": "emailtools",
   "version": "0.0.1",
-  "description": "Node JS set of tools to help working with Email protocols",
+  "description": "Node JS set of tools to ease working with Email protocols",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

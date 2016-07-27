@@ -17,7 +17,10 @@ function _parseMessage(message) {
     })
 }
 
-module.exports.Imap = {
+/**
+ * IMAP functions wrapper
+ */
+module.exports.IMAP = {
     /**
      * Used to establish IMAP connection to the server
      *
