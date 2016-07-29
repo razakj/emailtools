@@ -59,7 +59,7 @@ module.exports.IMAP = {
      * Test IMAP connection
      *
      * @param {Object} options
-     * @param {Object} options.connection Input options passed to {@link #module_emailtools.IMAP.connect} to establish the connection with host
+     * @param {Object} options.connection Input options passed to [connect()]{@link #module_emailtools.IMAP.connect} to establish the connection with host
      * @return {Promise} Resolved on success and rejected on failure
      */
     test: (options) => {
@@ -77,7 +77,7 @@ module.exports.IMAP = {
      * folder identifiers.
      *
      * @param {Object} options
-     * @param {Object} options.connection Input options passed to {@link #module_emailtools.IMAP.connect} to establish the connection with host
+     * @param {Object} options.connection Input options passed to [connect()]{@link #module_emailtools.IMAP.connect} to establish the connection with host
      * @param {boolean} options.jstree - If true returned structure is compatible with a [jsTree]{@link https://github.com/vakata/jstree} module
      * @param {boolean} options.raw - If true returned as received from [node-imap]{@link https://github.com/mscdex/node-imap}
      * @return {Promise} Resolved with structure defined by the flags above
@@ -154,7 +154,7 @@ module.exports.IMAP = {
      * Seqno is used to sort emails not UID.
      *
      * @param {Object} options
-     * @param {Object} options.connection Input options passed to {@link #module_emailtools.IMAP.connect} to establish the connection with host
+     * @param {Object} options.connection Input options passed to [connect()]{@link #module_emailtools.IMAP.connect} to establish the connection with host
      * @param {string} options.folderName - Valid folder name for given IMAP account
      * @param {int} options.length - Number of messages returned
      * @return {Promise} Resolved with dictionary where Sequence number is used as key and header object as value
@@ -207,7 +207,7 @@ module.exports.IMAP = {
      * Read and parse message specified by folder name and sequence number.
      *
      * @param {Object} options
-     * @param {Object} options.connection Input options passed to {@link #module_emailtools.IMAP.connect} to establish the connection with host
+     * @param {Object} options.connection Input options passed to [connect()]{@link module_emailtools.IMAP.connect} to establish the connection with host
      * @param {string} options.folderName  Valid folder name for given IMAP account
      * @param {int} options.messageSeqNo Message sequence number with the folder
      * @return {Promise} Resolved with [MailParser]{@link https://github.com/andris9/mailparser} message object
