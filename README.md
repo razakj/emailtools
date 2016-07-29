@@ -56,7 +56,7 @@ Test IMAP connection
 | Param | Type | Description |
 | --- | --- | --- |
 | options | <code>Object</code> |  |
-| options.connection | <code>Object</code> | Input options passed to [IMAP.connect](IMAP.connect) to establish the connection with host |
+| options.connection | <code>Object</code> | Input options passed to [#module_emailtools.IMAP.connect](#module_emailtools.IMAP.connect) to establish the connection with host |
 
 <a name="module_emailtools.IMAP.getFolders"></a>
 
@@ -69,7 +69,7 @@ Get whole folder structure for provided IMAP account. Format of the structure is
 | Param | Type | Description |
 | --- | --- | --- |
 | options | <code>Object</code> |  |
-| options.connection | <code>Object</code> | Input options passed to [IMAP.connect](IMAP.connect) to establish the connection with host |
+| options.connection | <code>Object</code> | Input options passed to [#module_emailtools.IMAP.connect](#module_emailtools.IMAP.connect) to establish the connection with host |
 | options.jstree | <code>boolean</code> | If true returned structure is compatible with a [jsTree](https://github.com/vakata/jstree) module |
 | options.raw | <code>boolean</code> | If true returned as received from [node-imap](https://github.com/mscdex/node-imap) |
 
@@ -84,7 +84,7 @@ Get headers of latest messages of specified folder for provided account. Number 
 | Param | Type | Description |
 | --- | --- | --- |
 | options | <code>Object</code> |  |
-| options.connection | <code>Object</code> | Input options passed to [IMAP.connect](IMAP.connect) to establish the connection with host |
+| options.connection | <code>Object</code> | Input options passed to [#module_emailtools.IMAP.connect](#module_emailtools.IMAP.connect) to establish the connection with host |
 | options.folderName | <code>string</code> | Valid folder name for given IMAP account |
 | options.length | <code>int</code> | Number of messages returned |
 
@@ -94,12 +94,12 @@ Get headers of latest messages of specified folder for provided account. Number 
 Read and parse message specified by folder name and sequence number.
 
 **Kind**: static method of <code>[IMAP](#module_emailtools.IMAP)</code>  
-**Returns**: <code>Promise</code> - Resolved with [MailParser]{@link https://github.com/andris9/mailparser) message object  
+**Returns**: <code>Promise</code> - Resolved with [MailParser](https://github.com/andris9/mailparser) message object  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | options | <code>Object</code> |  |
-| options.connection | <code>Object</code> | Input options passed to [IMAP.connect](IMAP.connect) to establish the connection with host |
+| options.connection | <code>Object</code> | Input options passed to [#module_emailtools.IMAP.connect](#module_emailtools.IMAP.connect) to establish the connection with host |
 | options.folderName | <code>string</code> | Valid folder name for given IMAP account |
 | options.messageSeqNo | <code>int</code> | Message sequence number with the folder |
 
