@@ -3,10 +3,19 @@ const moment = require('moment');
 const MailParser = require('mailparser').MailParser;
 
 /**
+ Set of NodeJS functions to make working with emails easier. Please do not expect any sophisticated logic the main goal is to keep it simple and straightforward to use.
+
+ This module serves as an abstraction layer on top of several great modules for working different email protocols.
+
+ @module emailtools
+ */
+
+/**
  * Internal function used to parse email message using MailParser
  *
  * @param {string} message - Message body
- * @return {Promise} - Resolved with object returned from MailParser
+ * @return {Promise} Resolved with object returned from MailParser
+ * @private
  */
 function _parseMessage(message) {
     return new Promise((resolve, reject)=>{
@@ -18,18 +27,24 @@ function _parseMessage(message) {
 }
 
 /**
- * IMAP functions wrapper
+ * Provides all the IMAP functions.
+ *
+ * IMAP connection is established automatically upon every function call. This is as designed since nature
+ * of application this module was originally developed wouldn't allow to keep connection alive. This behaviour
+ * might be extended in the future to keep connection alive using a flag.
+ *
  */
 module.exports.IMAP = {
     /**
-     * Used to establish IMAP connection to the server
+     * Establish IMAP connection to host
      *
+     * @param {Object} options - Connection options
      * @param {string} options.user - IMAP account user
      * @param {string} options.password - IMAP account password
      * @param {string} options.host - IMAP host server
      * @param {string} options.port - IMAP host server port
      * @param {tls} options.tls - IMAP TLS connection flag
-     * @return {Imap} - IMAP connection instance with active connection
+     * @return {Imap} IMAP connection instance as returned from [node-imap]{@link https://github.com/mscdex/node-imap}
      */
     connect: (options) => {
         return new Imap({
@@ -41,28 +56,31 @@ module.exports.IMAP = {
         });
     },
     /**
-     * Test IMAP connection - Resolved on success and Rejected on failure
+     * Test IMAP connection
      *
-     * @param {object} options.connection - Connection options passed to connect() function
-     * @return {Promise}
+     * @param {Object} options
+     * @param {Object} options.connection Input options passed to {@link IMAP.connect} to establish the connection with host
+     * @return {Promise} Resolved on success and rejected on failure
      */
     test: (options) => {
         return new Promise((resolve, reject)=>{
             const imap = this.Imap.connect(options.connection);
-            imap.once('error', err=>reject());
+            imap.once('error', err=>reject(err));
             imap.once('end', ()=>resolve());
             imap.once('ready', ()=>imap.end());
             imap.connect();
         });
     },
     /**
-     * Get whole folder structure for provided account. Format of the structure is defined by
-     * several flags. By default just an array of folder names is returned.
+     * Get whole folder structure for provided IMAP account. Format of the structure is defined by
+     * the flags described below - If no flag is set returned format is a string array containing
+     * folder identifiers.
      *
-     * @param {object} options.connection - Connection options passed to connect() function
-     * @param {boolean} options.jstree - If true returned structure is compatible with a jsTree library
-     * @param {boolean} options.raw - If true returned structure is returned as received from Imap library
-     * @return {Promise} - Resolved with structure defined by the flags
+     * @param {Object} options
+     * @param {Object} options.connection Input options passed to {@link IMAP.connect} to establish the connection with host
+     * @param {boolean} options.jstree - If true returned structure is compatible with a [jsTree]{@link https://github.com/vakata/jstree} module
+     * @param {boolean} options.raw - If true returned as received from [node-imap]{@link https://github.com/mscdex/node-imap}
+     * @return {Promise} Resolved with structure defined by the flags above
      */
     getFolders: (options) => {
         return new Promise((resolve, reject)=>{
@@ -130,17 +148,18 @@ module.exports.IMAP = {
         });
     },
     /**
-     * Get headers (index) of latest messages of specified folder. Number of messages
-     * is defined by length flag.
+     * Get headers of latest messages of specified folder for provided account. Number of messages
+     * is defined by the length flag.
      *
-     * Please note that messages are sorted by internal Sequence number as defined by Imap library.
+     * Seqno is used to sort emails not UID.
      *
-     * @param {object} options.connection - Connection options passed to connect() function
-     * @param {string} options.folderName - Valid folder name for given imap account
+     * @param {Object} options
+     * @param {Object} options.connection Input options passed to {@link IMAP.connect} to establish the connection with host
+     * @param {string} options.folderName - Valid folder name for given IMAP account
      * @param {int} options.length - Number of messages returned
-     * @return {Promise} - Resolved with Dictionary where Sequence number is used as key and header object as value
+     * @return {Promise} Resolved with dictionary where Sequence number is used as key and header object as value
      */
-    getMessageHeaders: (options) => {
+    getLastMessagesHeaders: (options) => {
         return new Promise((resolve, reject)=>{
             const imap = this.Imap.connect(options.connection);
             var messages = {};
@@ -151,7 +170,7 @@ module.exports.IMAP = {
             imap.once('ready', () => {
                 imap.openBox(options.folderName, true, (err, box)=>{
                     if(err) reject(err);
-                    if(!box) reject(new Error("Couldn't open box - "+options.folderName));
+                    if(!box) reject(new Error("Couldn't open folder - "+options.folderName));
                     imap.seq.fetch(
                         Math.max(1, box.messages.total-options.length) + ':*',
                         {bodies: 'HEADER.FIELDS (FROM TO SUBJECT DATE)'}
@@ -185,12 +204,13 @@ module.exports.IMAP = {
         });
     },
     /**
-     * Read and parse message.
+     * Read and parse message specified by folder name and sequence number.
      *
-     * @param {object} options.connection - Connection options passed to connect() function
-     * @param {string} options.folderName - Valid folder name for given imap account
-     * @param {int} options.messageSeqNo - Message sequence number with the folder
-     * @return {Promise} - Resolved with object representing the message. (returned from MailParser)
+     * @param {Object} options
+     * @param {Object} options.connection Input options passed to {@link IMAP.connect} to establish the connection with host
+     * @param {string} options.folderName  Valid folder name for given IMAP account
+     * @param {int} options.messageSeqNo Message sequence number with the folder
+     * @return {Promise} Resolved with [MailParser]{@link https://github.com/andris9/mailparser) message object
      */
     readMessage: (options) => {
         return new Promise((resolve, reject)=>{

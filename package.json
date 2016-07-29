@@ -4,7 +4,7 @@
   "description": "Node JS set of tools to ease working with Email protocols",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "docs": "jsdoc2md index.js > README.md"
   },
   "repository": {
     "type": "git",
