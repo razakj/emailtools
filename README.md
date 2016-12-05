@@ -19,6 +19,7 @@ Set of NodeJS functions to make working with emails easier. Please do not expect
         * [.searchMessageHeaders(options)](#module_EmailTools.IMAP.searchMessageHeaders) ⇒ <code>Promise</code>
         * [.readMessage(options)](#module_EmailTools.IMAP.readMessage) ⇒ <code>Promise</code>
         * [.readMessages(options)](#module_EmailTools.IMAP.readMessages) ⇒ <code>Promise</code>
+        * [.appendMessage(options)](#module_EmailTools.IMAP.appendMessage) ⇒ <code>Promise</code>
     * [.template(inputText, vars)](#module_EmailTools.template) ⇒ <code>string</code>
 
 <a name="module_EmailTools.SMTP"></a>
@@ -100,6 +101,7 @@ Provides all the IMAP functions.IMAP connection is established automatically u
     * [.searchMessageHeaders(options)](#module_EmailTools.IMAP.searchMessageHeaders) ⇒ <code>Promise</code>
     * [.readMessage(options)](#module_EmailTools.IMAP.readMessage) ⇒ <code>Promise</code>
     * [.readMessages(options)](#module_EmailTools.IMAP.readMessages) ⇒ <code>Promise</code>
+    * [.appendMessage(options)](#module_EmailTools.IMAP.appendMessage) ⇒ <code>Promise</code>
 
 <a name="module_EmailTools.IMAP.connect"></a>
 
@@ -219,6 +221,20 @@ Read and parse messages specified by folder name and sequence number range
 | options.connection | <code>Object</code> | Input options passed to [connect()](module_emailtools.IMAP.connect) to establish the connection with host |
 | options.folderName | <code>string</code> | Valid folder name for given IMAP account |
 | options.seqNoRange | <code>Array.&lt;int&gt;</code> | Sequence number range FROM, TO |
+
+<a name="module_EmailTools.IMAP.appendMessage"></a>
+
+#### IMAP.appendMessage(options) ⇒ <code>Promise</code>
+(NOT IMPLEMENTED) Appends message to the given folder of given account
+
+**Kind**: static method of <code>[IMAP](#module_EmailTools.IMAP)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>Object</code> |  |
+| options.connection | <code>Object</code> | Input options passed to [connect()](module_emailtools.IMAP.connect) to establish the connection with host |
+| options.folderName | <code>string</code> | Valid folder name for the given IMAP account |
+| options.email | <code>Object</code> | Email object which shall be parsed and appended |
 
 <a name="module_EmailTools.template"></a>
 

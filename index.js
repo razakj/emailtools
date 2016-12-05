@@ -213,7 +213,7 @@ module.exports.IMAP = {
                 end(err);
             });
             imap.once('ready', ()=> {
-                imap.openBox(options.folderName, true, (err, box)=> {
+                imap.openBox(options.folderName, options.folderReadonly ? true : false, (err, box)=> {
                     if (err) {
                         _err = err;
                         imap.end();
@@ -507,6 +507,49 @@ module.exports.IMAP = {
             }, (err, data)=> {
                 err ? reject(err) : resolve(data);
             });
+        });
+    },
+    /**
+     * (NOT IMPLEMENTED) Appends message to the given folder of given account
+     *
+     * @param {Object} options
+     * @param {Object} options.connection Input options passed to [connect()]{@link module_emailtools.IMAP.connect} to establish the connection with host
+     * @param {string} options.folderName  Valid folder name for the given IMAP account
+     * @param {Object} options.email Email object which shall be parsed and appended
+     * @return {Promise}
+     */
+    appendMessage: (options) => {
+        return new Promise((resolve, reject)=>{
+            resolve();
+            //if(!options.email) reject(new Error("Email object must be provided"));
+            //var from = 'From: ';
+            //var to = 'To: ';
+            //var subject = 'Subject: ';
+            //
+            //if(options.email.from) {
+            //    if(Array.isArray(options.email.from)) {
+            //        options.email.from.forEach(f=>{
+            //            if(typeof(f)==="string") {
+            //                from += '<'+f+'>'
+            //            } else if(typeof(f) === "object") {
+            //                var fStr = '';
+            //                if(f.hasOwnProperty('name')) {
+            //                    fStr +=
+            //                } else if(f.hasOwnProperty('address')) {
+            //
+            //                }
+            //            }
+            //        })
+            //    }
+            //}
+            //
+            //this.IMAP._imapConnectAndOpenBox(options, (info, next)=>{
+            //    info.imap.append('test', {
+            //        flags: 'Seen'
+            //    }, next)
+            //}, err => {
+            //    err ? reject(err) : resolve();
+            //});
         });
     }
 };
