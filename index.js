@@ -145,11 +145,13 @@ module.exports.SMTP = {
             options.data['text'] = htmlToText.fromString(options.data.html, {
                 ignoreImage: true
             });
+            options.data['date'] = new Date().toUTCString();
             smtp.sendMail(options.data, (err, info)=>{
                 smtp.close();
                 if(err){
                     reject(err);
                 } else {
+                    info['date'] = options.data.date;
                     info['text'] = options.data.text;
                     info['html'] = options.data.html;
                     info['subject'] = options.data.subject;
