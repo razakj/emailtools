@@ -1,6 +1,6 @@
 {
   "name": "emailtools",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Node JS set of tools to ease working with Email protocols",
   "main": "index.js",
   "scripts": {
