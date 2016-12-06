@@ -18,7 +18,7 @@ function _getUid (from, to, date, subject) {
     if(Array.isArray(to)) to = to[0];
     return crypto.createHash('md5').update(subject+from+to+date).digest('hex');
 }
-
+module.exports.getUid = _getUid;
 
 function normalizeFromAndTo(arr) {
     var str = "";
@@ -30,6 +30,7 @@ function normalizeFromAndTo(arr) {
     }
     return str;
 }
+module.exports.normalizeFromAndTo = normalizeFromAndTo;
 
 /**
  * Internal function used to parse email message using MailParser
@@ -149,6 +150,9 @@ module.exports.SMTP = {
                 if(err){
                     reject(err);
                 } else {
+                    info['text'] = options.data.text;
+                    info['html'] = options.data.html;
+                    info['subject'] = options.data.subject;
                     resolve(info);
                 }
             })
