@@ -313,7 +313,7 @@ module.exports.IMAP = {
                         if(options.jstree) {
                             folders = [];
                             function _boxesToJstree(name, obj, parents){
-                                var id = parents ? parents + '.' + name : name;
+                                var id = parents ? parents + (obj.delimiter ? obj.delimiter : '.') + name : name;
                                 var jsFolder = {
                                     id: options.connection+'_folder_'+id,
                                     text: name,
@@ -341,7 +341,7 @@ module.exports.IMAP = {
                             } else {
                                 folders = [];
                                 function _appendToArray(name, obj, parents) {
-                                    var code = parents ? parents + '.' + name : name;
+                                    var code = parents ? parents + (obj.delimiter ? obj.delimiter : '.') + name : name;
                                     folders.push(code);
                                     if(obj.children && obj.children != null) {
                                         for(var child in obj.children) {
