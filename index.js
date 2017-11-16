@@ -12,11 +12,32 @@ const crypto = require('crypto');
  */
 
 
-function _getUid (from, to, date, subject) {
+function _getUid(from, to, date, subject) {
     if(Array.isArray(date)) date = date[0];
     if(Array.isArray(from)) from = from[0];
     if(Array.isArray(to)) to = to[0];
-    return crypto.createHash('md5').update(subject+from+to+date).digest('hex');
+    if(Array.isArray(subject)) subject = subject[0];
+
+    to = typeof to !== "object" ? to.split(',')[0] : to;
+    from = typeof from !== "object" ? from.split(',')[0] : from;
+
+    const momentDate = moment.utc(date).format("DD/MM/YYYY HH:mm:ss");
+    const fromAddress = typeof from === "object" ? from.address : from;
+    const toAddress = typeof to === "object" ?  to.address : to;
+
+    const realFromAddress = (fromAddress.indexOf('<') > -1 ? fromAddress.match(/<(.*?)>/i)[0]
+        .replace('<', '').replace('>', '') : fromAddress);
+    const realToAddress = (toAddress.indexOf('<') > -1 ? toAddress.match(/<(.*?)>/i)[0]
+        .replace('<', '').replace('>', ''): toAddress);
+
+    const uid = crypto.createHash('md5').update(
+        subject+
+        realFromAddress+
+        realToAddress+
+        momentDate
+    ).digest('hex');
+
+    return uid;
 }
 module.exports.getUid = _getUid;
 
@@ -48,7 +69,7 @@ function _parseMessage(message) {
             parsedMessage['ccString'] = normalizeFromAndTo(parsedMessage.cc);
 
             var header = Imap.parseHeader(message);
-            parsedMessage['uid'] = _getUid(header.from, header.to, header.date, header.subject);
+            parsedMessage['uid'] = _getUid(parsedMessage.from, parsedMessage.to, header.date, header.subject);
             resolve(parsedMessage)
         });
         mailParser.write(message);
@@ -145,7 +166,9 @@ module.exports.SMTP = {
             options.data['text'] = htmlToText.fromString(options.data.html, {
                 ignoreImage: true
             });
-            options.data['date'] = new Date().toUTCString();
+
+            if(!options.data['date']) options.data['date'] = new Date();
+
             smtp.sendMail(options.data, (err, info)=>{
                 smtp.close();
                 if(err){
