@@ -25,10 +25,10 @@ function _getUid(from, to, date, subject) {
     const fromAddress = typeof from === "object" ? from.address : from;
     const toAddress = typeof to === "object" ?  to.address : to;
 
-    const realFromAddress = (fromAddress.indexOf('<') > -1 ? fromAddress.match(/<(.*?)>/i)[0]
-        .replace('<', '').replace('>', '') : fromAddress);
-    const realToAddress = (toAddress.indexOf('<') > -1 ? toAddress.match(/<(.*?)>/i)[0]
-        .replace('<', '').replace('>', ''): toAddress);
+    const realFromAddress = fromAddress ? (fromAddress.indexOf('<') > -1 ? fromAddress.match(/<(.*?)>/i)[0]
+        .replace('<', '').replace('>', '') : fromAddress) : '';
+    const realToAddress = toAddress ? (toAddress.indexOf('<') > -1 ? toAddress.match(/<(.*?)>/i)[0]
+        .replace('<', '').replace('>', ''): toAddress) : '';
 
     const uid = crypto.createHash('md5').update(
         subject+
