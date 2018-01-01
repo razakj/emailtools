@@ -18,8 +18,8 @@ function _getUid(from, to, date, subject) {
     if(Array.isArray(to)) to = to[0];
     if(Array.isArray(subject)) subject = subject[0];
 
-    to = typeof to !== "object" ? to.split(',')[0] : to;
-    from = typeof from !== "object" ? from.split(',')[0] : from;
+    to = typeof to !== "object" ? (to ? to.split(',')[0] : 'toUnknown') : to;
+    from = typeof from !== "object" ? (from ? from.split(',')[0] : 'fromUnknown') : from;
 
     const momentDate = moment.utc(date).format("DD/MM/YYYY HH:mm:ss");
     const fromAddress = typeof from === "object" ? from.address : from;
