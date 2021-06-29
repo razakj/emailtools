@@ -27,6 +27,6 @@
     "imap": "^0.8.19",
     "mailparser": "^0.6.1",
     "moment": "^2.14.1",
-    "nodemailer": "^2.6.4"
+    "nodemailer": "^6.6.1"
   }
 }
