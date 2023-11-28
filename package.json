@@ -23,10 +23,10 @@
   },
   "homepage": "https://github.com/razakj/emailtools#readme",
   "dependencies": {
-    "html-to-text": "^2.1.3",
+    "html-to-text": "^5.1.0",
     "imap": "^0.8.19",
     "mailparser": "^0.6.1",
     "moment": "^2.14.1",
-    "nodemailer": "^2.6.4"
+    "nodemailer": "^3.0.0"
   }
 }
